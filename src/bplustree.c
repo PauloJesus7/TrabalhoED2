@@ -171,8 +171,8 @@ BPTreeInserir (int chave, int regIndex) {
   if (arvore.raiz < 0) {
     // Cria uma nova pagina raiz e atualiza o cabeçalho no arquivo
     Pagina pagina;
-    inicializarPagina(&arvore, &pagina);
-    inserirEmFolha(&pagina, chave, regIndex);
+    inicializar(&arvore, &pagina);
+    inserirFolha(&pagina, chave, regIndex);
     arvore.raiz = pagina.index;
     arvore.qtde++;
     rewind(arquivoArvore);
@@ -189,7 +189,7 @@ BPTreeInserir (int chave, int regIndex) {
   fseek(arquivoArvore, sizeof(Pagina) * pagIndex, SEEK_CUR);
   fread(&pagina, sizeof(Pagina), 1, arquivoArvore);
   
-  inserirEmFolha(&pagina, chave, regIndex);
+  inserirFolha(&pagina, chave, regIndex);
   ordenarFolha(&pagina);
   arvore.qtde++;
   
@@ -205,10 +205,10 @@ BPTreeInserir (int chave, int regIndex) {
 void BPTreeCorrigirOverflow(BPTree *arvore, Pagina pagina) {
   if(verificarOverflow(&pagina)){
     Pagina paginaIrma;
-    inicializarPagina(arvore, &paginaIrma);
+    inicializar(arvore, &paginaIrma);
 
     for (int i = D; i < pagina.qtde; i++){
-      inserirEmFolha(&paginaIrma, pagina.chave[i], pagina.filho[i]);
+      inserirFolha(&paginaIrma, pagina.chave[i], pagina.filho[i]);
     }
 
     pagina.qtde -= paginaIrma.qtde;
@@ -220,7 +220,7 @@ void BPTreeCorrigirOverflow(BPTree *arvore, Pagina pagina) {
 
     if (pagina.pai < 0){
       Pagina paginaPai;
-      inicializarPagina(arvore, &pagina);
+      inicializar(arvore, &pagina);
     }
     
   }
@@ -239,8 +239,8 @@ BPTreeImprimeArvoreCompleta () {
   fread(&arvore, sizeof(BPTree), 1, arquivoArvore);
   // Verifica se a árvore está vazia
   if (arvore.qtde > 0) {
-    printf(HCYN"[!] Index: Posição da página no arquivo da árvore          "reset);
-    printf(HCYN"\n[!] I.R.: Indíce/Posição do registro na tabela de registros\n\n"reset);
+    printf("[!] Index: Posição da página no arquivo da árvore          ");
+    printf("\n[!] I.R.: Indíce/Posição do registro na tabela de registros\n\n");
     // Lê a pagina raiz
     fseek(arquivoArvore, sizeof(BPTree) + (arvore.raiz * sizeof(Pagina)), SEEK_SET);
     Pagina pagina;
@@ -254,9 +254,9 @@ BPTreeImprimeArvoreCompleta () {
 
 void 
 BPTreeImprimeNivel (Pagina *pag, FILE *arquivoArvore) {
-  if (pag->tipo == FOLHA) {
+  if (pag->tipo == folha) {
     // Função que imprime artigos
-    printf(HGRN"Index [%d] Chaves {", pag->index);
+    printf("Index [%d] Chaves {", pag->index);
     for (int j = 0; j < pag->qtde; j++) {
       printf(" %d ", pag->chave[j]);
     }
@@ -273,7 +273,7 @@ BPTreeImprimeNivel (Pagina *pag, FILE *arquivoArvore) {
       printf("--> { %d, ... } | ", proximo.chave[0]);
     }
     printf("Pai: %d", pag->pai);
-    printf("\n"reset);
+    printf("\n");
   } else {
     // Chama a função recursivamente para cada filho
     for (int i = 0; i < pag->qtde + 1; i++) {
@@ -284,7 +284,7 @@ BPTreeImprimeNivel (Pagina *pag, FILE *arquivoArvore) {
       BPTreeImprimeNivel(&aux, arquivoArvore);
     }
     
-    printf(HYEL"Index [%d] Chaves {", pag->index);
+    printf("Index [%d] Chaves {", pag->index);
     
     for (int j = 0; j < pag->qtde; j++) {
       printf(" %d ", pag->chave[j]);
@@ -296,6 +296,6 @@ BPTreeImprimeNivel (Pagina *pag, FILE *arquivoArvore) {
       printf(" %d ", pag->filho[i]);
     }
     
-    printf("} | Pai: %d\n"reset, pag->pai);
+    printf("} | Pai: %d\n", pag->pai);
   }
 }

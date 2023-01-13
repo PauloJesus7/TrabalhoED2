@@ -15,20 +15,20 @@ int main (int argc, char *argv[]) {//argc é um inteiro que indica a quantidade 
   while (true) {//enquanto verdadeiro
     setbuf(stdin,NULL);//permite colocar o stdin no modo sem bufferização,Os dados são transmitidos logo ao serem escritos.
     printf("\n=----------------MENU----------------=");
-    printf(HWHT"\n[1] - Impressão da árvore "reset);
-    printf(HWHT"\n[2] - Buscar por um id"reset);
-    printf(HGRN"\n[3] - Inserção de um novo paciente"reset);
-    printf(HWHT"\n[4] - Remoção de um paciente"reset);
-    printf(HWHT"\n[5] - Listar pacientes com id'S dentro de um intervalo de valores"reset);
+    printf("\n[1] - Impressão da árvore ");
+    printf("\n[2] - Buscar por um id");
+    printf("\n[3] - Inserção de um novo paciente");
+    printf("\n[4] - Remoção de um paciente");
+    printf("\n[5] - Listar pacientes com id'S dentro de um intervalo de valores");
     
     printf("=--------------------------------------=\n");
-    printf(HMAG"Digite a opção [1-5] -> "reset);
+    printf("Digite a opção [1-5] -> ");
     scanf("%d", &op);
   
     switch (op) {//comparar a entrada de uma expressão com uma constante
       case 1: {//sera feito a impressao da arvore ao indicar esta opcao
         char caminho[TAM];
-        printf(HMAG"\nInforme o caminho do um arquivo ou 1 para usar o padrão: "reset);
+        printf("\nInforme o caminho do um arquivo ou 1 para usar o padrão: ");
         scanf("%s", caminho);//leitura do caminho do arquivo importado
         if (strcmp(caminho, "1") != 0){//verifica se foi digitado 1, se sim retorna diferente de 0 para criar tabela.
           criarTabelaRegistros(caminho);
@@ -46,14 +46,14 @@ int main (int argc, char *argv[]) {//argc é um inteiro que indica a quantidade 
 	//insercao de um novo paciente
       	break;
       case 4://sera feito a remoção de um paciente nesta item
-        printf(HGRN"\n[*] Páginas Folhas  \n"reset);
-        printf(HYEL"[*] Páginas Internas\n\n"reset);
+        printf("\n[*] Páginas Folhas  \n");
+        printf("[*] Páginas Internas\n\n");
         BPTreeImprimeArvoreCompleta();//chamada da funcao para imprimir arvore
         break;
 
       case 5: {//sera feito a listagem dos pacientes com id'S no intervalo
         int id, pos;
-        printf(HMAG"\nInforme o ID do registro: "reset);//procura por um id
+        printf("\nInforme o ID do registro: ");//procura por um id
         scanf("%d", &id);
         imprimirArtigo(id);
         break;

@@ -6,7 +6,7 @@
 #include "util.h"
 
 typedef struct bptree {
-  int ordem, qtde, raiz, indexes;
+  int ordem, qtde, raiz, index;
 } BPTree;
 
 void BPTreeInicializar();

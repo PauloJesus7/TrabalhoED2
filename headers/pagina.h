@@ -1,7 +1,8 @@
 #ifndef PAGINA_H_
 #define PAGINA_H_
 
-
+#include "util.h"
+#include "bplustree.h"
 
 typedef enum folha{
     interna,

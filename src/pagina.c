@@ -1,11 +1,11 @@
-#include "../controllers/pagina.h"
+#include "../headers/pagina.h"
 
 void inicializar(BPTree* arvore, Pagina * pagina)
 {
     pagina->qtde    = 0;
-    pagina->tipo    = FOLHA;
+    pagina->tipo    = folha;
     pagina->nivel   = 0;
-    pagina->index   = arvore->indexes;
+    pagina->index   = arvore->index;
     pagina->proximo = -1;
     pagina->pai     = -1;
     arvore->index++;
@@ -21,7 +21,7 @@ void inicializar(BPTree* arvore, Pagina * pagina)
 }
 
 void inserirFolha(Pagina* pagina, int chave, int Index) {
-  if (pagina->tipo == FOLHA) {
+  if (pagina->tipo == folha) {
     pagina->chave[pagina->qtde] = chave;
     pagina->filho[pagina->qtde] = Index;
     pagina->qtde++;
@@ -87,25 +87,21 @@ void ordenarInterna (FILE *arquivoArvore, Pagina *pagina) {
   }
 }
 
-tFolha ehFolha (Pagina pagina) {
+Folha ehFolha (Pagina pagina) {
   return pagina.tipo;
 }
-
 
 bool verificarOverflow(Pagina *pagina){
   return pagina->qtde > (2 * 2);
 }
 
-
 bool verificarUnderflow (Pagina *pagina) {
   return pagina->qtde < 2;
 }
 
-
 void liberar (Pagina *pagina) {
   free(pagina);
 }
-
 
 void imprimir (Pagina *pagina) {
   printf("Chaves: ");
