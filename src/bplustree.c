@@ -11,7 +11,7 @@ BPTreeInicializar () {
   arvore.ordem   = D;
   arvore.qtde    = 0;
   arvore.raiz    = -1;
-  arvore.indexes = 0;
+  arvore.index = 0;
   
   FILE *arquivoArvore = fopen(TREE_FILE, "wb");
 

@@ -48,15 +48,15 @@ typedef enum {
   true
 } bool;
 
-typedef struct artigo {
+typedef struct paciente {
   int id;
-  int ano;
-  char autor[TAM];
-  char titulo[TAM];
-  char revista[TAM];
-  char DOI[TAM];
-  char palavraChave[TAM];
-} Artigo;
+  int anoNascimento;
+  char nome[TAM];
+  char endereco[500];
+  char nomeMae[TAM];
+  char nomePai[TAM];
+  char CPF[20];
+} Paciente;
 
 void *mallocSafe(size_t);
 void imprimirArtigo(int);

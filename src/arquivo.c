@@ -44,24 +44,24 @@ criarTabelaRegistros (char* caminho) { //função de criação da tabela do regi
 
   while (getline(&registro, &len, arquivoTXT) > 0) {//extrai caracteres do fluxo de entrada e os anexa ao objeto string até que o caractere delimitador seja encontrado
     int campo = 0;
-    Artigo artigo;
+    Paciente paciente;
     
     info = strtok(registro, delim);//quebrar a string registro usando o delimitador informado e retornar suas partes
     while (info != NULL) {//enquanto info aponte para algo diferente de nulo
       switch (campo) {//neste bloco irá ser repassado todos os dados pertinentes a estrutura apontada das informações arquivadas dos Pacientes
-        case 0: artigo.id = atoi(info); break;//converter string id em numero
-        case 1: artigo.ano = atoi(info); break;//converter string ano em numero 
-        case 2: strncpy(artigo.autor, info, TAM); break;//copia os primeiro Tam caracteres  de info para autor
-        case 3: strncpy(artigo.titulo, info, TAM); break;
-        case 4: strncpy(artigo.revista, info, TAM); break;
-        case 5: strncpy(artigo.DOI, info, TAM); break;
+        case 0: paciente.id = atoi(info); break;//converter string id em numero
+        case 1: paciente.anoNascimento = atoi(info); break;//converter string ano em numero 
+        case 2: strncpy(paciente.nome, info, TAM); break;//copia os primeiro Tam caracteres  de info para nome
+        case 3: strncpy(paciente.endereco, info, TAM); break;
+        case 4: strncpy(paciente.nomeMae, info, TAM); break;
+        case 5: strncpy(paciente.nomePai, info, TAM); break;
         case 6:
-          strncpy(artigo.palavraChave, info, TAM);
-          strcat(artigo.palavraChave, ",");//concatena a palavra chave com vírgula
+          strncpy(paciente.CPF, info, TAM);
+          strcat(paciente.CPF, ",");//concatena a palavra chave com vírgula
           break;
         default:
-          strcat(artigo.palavraChave, info);//concatena a palavra chave com a informacao que recebeu o registro dividido
-          strcat(artigo.palavraChave, ",");
+          strcat(paciente.CPF, info);//concatena a palavra chave com a informacao que recebeu o registro dividido
+          strcat(paciente.CPF, ",");
           break;
       }
       
@@ -69,9 +69,9 @@ criarTabelaRegistros (char* caminho) { //função de criação da tabela do regi
       info = strtok(NULL, delim);//strtok recebe NULL como entrada, para encontrar as informação subssequentes.
     }  
     
-    artigo.palavraChave[strlen(artigo.palavraChave) - 1] = '\0';//adiciona /0 ao final da palavra chave
+    paciente.CPF[strlen(paciente.CPF) - 1] = '\0';//adiciona /0 ao final da palavra chave
     
-    fwrite(&artigo, sizeof(Artigo), 1, tabelaReg);
+    fwrite(&paciente, sizeof(paciente), 1, tabelaReg);
     cabecalho.qtde++;
   }
   
@@ -95,13 +95,13 @@ void importarTabela () {
   BPTreeInicializar();//chamando funcao
 
   Tabela cabecalho;
-  Artigo artigo;
+  Paciente paciente;
   
   fread(&cabecalho, sizeof(Tabela), 1, tabelaReg);//leitura de um bloco armazenado em tabelaReg com tamanho 1, e numero de elementos da Tabela,e o fluxo será definido pelo cabecalho 
 
   for(int i = 0; i < cabecalho.qtde; i++){
-    fread(&artigo, sizeof(Artigo), 1, tabelaReg);
-    BPTreeInserir(artigo.id, i);
+    fread(&paciente, sizeof(paciente), 1, tabelaReg);
+    BPTreeInserir(paciente.id, i);
   }
 
   fclose(tabelaReg);

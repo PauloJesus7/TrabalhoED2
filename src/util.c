@@ -25,7 +25,7 @@ mallocSafe (size_t nbytes) {//função para alocamento de espaço com segurança
   
 void
 imprimirArtigo(int id) {//sera usada para impressao dos dados dos pacientes
-  int posPag, posArt = -1;//posicao de paginas e dos artigos  
+  int posPag, posArt = -1;//posicao de paginas e dos pacientes  
   
   if(!BPTreeProcurarElemento(id, &posPag)){//funcao de pesquisa por id na arvore
     printf("Paciente não encontrado!!!\n");//no caso de passar um id inexistente
@@ -53,16 +53,16 @@ imprimirArtigo(int id) {//sera usada para impressao dos dados dos pacientes
     EXIT_FAILURE;//valor padrão para retornar a rescisão mal-sucedida
   }
   
-  fseek(tabelaReg, sizeof(Tabela) + (posArt * sizeof(Artigo)), SEEK_SET);//permite realizar operações de leitura e escrita em arquivos de forma randômica
-  Artigo artigo;//declaracao de variavel
-  fread(&artigo, sizeof(Artigo), 1, tabelaReg);//permite a leitura de um bloco de bytes do arquivo binário pagina
+  fseek(tabelaReg, sizeof(Tabela) + (posArt * sizeof(Paciente)), SEEK_SET);//permite realizar operações de leitura e escrita em arquivos de forma randômica
+  Paciente paciente;//declaracao de variavel
+  fread(&paciente, sizeof(paciente), 1, tabelaReg);//permite a leitura de um bloco de bytes do arquivo binário pagina
   fclose(tabelaReg);//fecha arquivo tabela
 	//imprimir todos os dados do paciente
-  printf("\nId.........: %d", artigo.id);//id do paciente
-  printf("\nAnoNascimento........: %d", artigo.ano);//ano paciente nasceu
-  printf("\nNOME......: %s", artigo.autor);//nome do paciente
-  printf("\nendereco.....: %s", artigo.titulo);//endereço do paciente
-  printf("\nnomeMae....: %s", artigo.revista);//mae do paciente
-  printf("\nnomePai........: %s", artigo.DOI);//pai do paciente
-  printf("\nCPF...: %s\n", artigo.palavraChave);//CPF do paciente
+  printf("\nId.........: %d", paciente.id);//id do paciente
+  printf("\nAnoNascimento........: %d", paciente.anoNascimento);//ano paciente nasceu
+  printf("\nNOME......: %s", paciente.nome);//nome do paciente
+  printf("\nendereco.....: %s", paciente.endereco);//endereço do paciente
+  printf("\nnomeMae....: %s", paciente.nomeMae);//mae do paciente
+  printf("\nnomePai........: %s", paciente.nomePai);//pai do paciente
+  printf("\nCPF...: %s\n", paciente.CPF);//CPF do paciente
 }
